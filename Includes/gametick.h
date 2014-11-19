@@ -10,11 +10,8 @@
 
 
 #define LASERSPEED 5
-#define GAME_SPEED 1
 #define NOFBLOCKS 30
 #define LIVES 3
-#define FIELD_WIDTH 640
-#define FIELD_HEIGHT 480
 #define BLOCK_WIDTH 8
 #define BLOCK_HEIGHT 4
 #define SCREEN_WIDTH 640
@@ -33,7 +30,7 @@ int calculate_spaceship();
 
 int detect_hit();
 
-int tick();
+int gametick();
 
 int game_end();
 

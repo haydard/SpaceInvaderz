@@ -10,6 +10,7 @@
 #define BLOCK               4
 
 typedef struct GAMEOBJECT{
+	int number;
 	int color;
 	int x_location;
 	int y_location;
