@@ -1,10 +1,13 @@
+#ifndef ____objects__
+#define ____objects__
+
 #include <stdlib.h>
 
-#define SPACESHIP	0
-#define ENEMY		1
-#define LASER_ENEMY	2
-#define LASER_SPACESHIP 3
-#define BLOCK		4
+#define SPACESHIP           0
+#define ENEMY               1
+#define LASER_ENEMY         2
+#define LASER_SPACESHIP     3
+#define BLOCK               4
 
 typedef struct GAMEOBJECT{
 	int color;
@@ -16,4 +19,7 @@ typedef struct GAMEOBJECT{
     	int type;
 }game_object;
 
-game_object create_gameobject();
+//game_object create_gameobject();
+
+
+#endif //(__objects__)defined

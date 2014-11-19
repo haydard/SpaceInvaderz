@@ -71,27 +71,10 @@ EVENT event()
 }
 
 //functions to use in the game loop
-int calculate_laser(LASER)
-{
-    if (LASER->exist){
-        if (LASER->alignment){
-            LASER->x_location--;
-        } else{
-            LASER->x_location++;
-        }}
-}
 
-int calculate_blocks()
-{
-    //for start blocks doesnt move
-}
 
-int calculate_spaceship()
-{
-    if (MOVEMENT){
-        // calculate the new spot
-    }
-}
+
+
 
 int detect_hit(){
     //for (every laser, check for collision)

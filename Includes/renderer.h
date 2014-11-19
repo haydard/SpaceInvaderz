@@ -1,13 +1,10 @@
-#define BLACK 0x000000
-#define WHITE 0xFFFFFF
-#define RED   0xFF0000
-#define GREEN 0x00FF00
-#define BLUE  0x0000FF
+#ifndef ____renderer__
+#define ____renderer__
 
-#define FIELD_WIDTH 640
-#define FIELD_HEIGHT 480
-#define SCREEN_WIDTH
-#define SCREEN_HEIGHT
+#include "gametick.h"
 
-int color_RGB();
+const char screen[FIELD_WIDTH * FIELD_HEIGHT * 3];
+
 int render();
+
+#endif
