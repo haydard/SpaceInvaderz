@@ -51,6 +51,10 @@ int gamespeed()
     return inputbuffer[3];
 }
 
+void check_input(){
+
+}
+
 
 
 

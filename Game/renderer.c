@@ -1,5 +1,5 @@
 #include <renderer.h>
-#include <gametick.h>
+#include <stdio.h>
 
 
 // #include soundlibrary
@@ -7,16 +7,11 @@
 
 //#define BYTE_DEPTH 3
 
-#define WHITE   0xffffff
-#define BLACK   0x000000
-#define RED     0xff0000
-#define GREEN   0x00ff00
-#define BLUE    0x0000ff
 
-const char screen[FIELD_WIDTH * FIELD_HEIGHT * 3];
+
 
 //Adress of the pixel array, used by video driver. Somehow to communicate with video driver.
-char* MEM_VIDEO = &screen;
+//char* MEM_VIDEO = &screen;
 
 
 
@@ -27,14 +22,16 @@ int color_RGB(int c)
         return WHITE;
     }else {
         return BLACK;
+
     }
 }
 
-int render_graphic()
+void render_graphic(int **field)
 {
     //if(change){
+	int i,j;
         for (i = 0; i < FIELD_WIDTH; i++){
-            for j = 0; j< FIELD_HEIGHT ; j++){
+            for (j = 0; j< FIELD_HEIGHT ; j++){
                 screen[((i*FIELD_WIDTH) + j) * 3] = color_RGB(field[i][j]);
             }
         }
@@ -42,15 +39,15 @@ int render_graphic()
 }
 
 //render the sound
-int render_sound(){
+void render_sound(){
     int soundfile = 0;
     if (!soundfile)
         printf("no sound found!");
 }
 
 //bundled rendering function
-int render(){
-    render_graphic();
+void render(int **field){
+    render_graphic(field);
     render_sound();
 }
 

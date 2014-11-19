@@ -1,16 +1,6 @@
 #include <objects.h>
 
 
-typedef struct game_object{
-    int number;
-    int color;
-    int x_location;
-    int y_location;
-    int lives;
-    int width;
-    int height;
-    int type;
-}game_object;
 
 
 /*
