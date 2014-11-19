@@ -14,7 +14,8 @@ int main()
     while (running) {
         //check for events
         event();
-        while (paused) continue;
+        while (paused)
+            continue;
         
         tick();
         render();

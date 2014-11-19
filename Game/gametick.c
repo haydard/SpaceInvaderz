@@ -1,6 +1,6 @@
 //gametick.c
 
-//#include gametick.h>
+//#include <gametick.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -24,6 +24,7 @@ int shot;
 int levelcleared;
 int gameover;
 int change;
+int block_direction;
 
 
 //initializing a new game: create field, create blocks, create spaceship.
@@ -68,7 +69,8 @@ int game_init(){
     spaceship.width = 8;
     spaceship.height = 6;
     spaceship.type = 2;
- 
+    
+    shot = 0;
     return 1;
 }
 
@@ -82,13 +84,14 @@ int event()
 int calculate_laser(game_object laser)
 {
 	switch (laser.type)
-		case 2:		//enemy laser
-			laser.y_location += LASERSPEED;
-			break;
-		case 3:
+		case 4:		//enemy laser
 			laser.y_location -= LASERSPEED;
 			break;
+		case 5:
+			laser.y_location += LASERSPEED;
+			break;
 		default
+            return 0;
 }
 
 int calculate_blocks()
@@ -99,14 +102,22 @@ int calculate_blocks()
 int calculate_spaceship()
 {
     if (MOVEMENT){
-        // calculate the new spot
+        spaceship->x_location += MOVEMENT;
     }
 }
 
+int isHit(game_object laser, game_object block){
+    int i, j;
+}
+
 int detect_hit(){
-    //for (every laser, check for collision)
+    int i,j,n;
+    for (i=0; n<NOFBLOCKS; i++){
+        isHit(laser, blocks[i]);
+    }//for (every laser, check for collision)
         //if collision, do the thing. else do nothing
 }
+
 
 
 int tick()
@@ -124,7 +135,8 @@ render(field);
 
 int game_end()
 {
-    //free resources or something like that;
+    free (spaceship);
+    free (blocks);//free resources or something like that;
     return 0;
 }
 
