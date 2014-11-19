@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "Includes/gametick.h"
-#include "Includes/renderer.h"
+#include <gametick.h>
+#include <unistd.h>
 
+#define GAME_SPEED 1
 
 int running;
 int paused;
@@ -12,12 +13,12 @@ int main()
     //initialize the game;
     running = game_init();
     while (running) {
+    	usleep(50000/GAME_SPEED);
         //check for events
         event();
         while (paused) continue;
         
-        tick();
-        render();
+        gametick();
     }
     
     //end of game
@@ -28,4 +29,5 @@ int main()
     }
     else {printf("Something went wrong during quitting the game");
     }
+    return 0;
 }
