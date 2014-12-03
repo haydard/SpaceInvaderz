@@ -18,6 +18,7 @@ typedef struct GAMEOBJECT{
 	unsigned char width;
 	unsigned char height;
     	int type;
+    	game_object *next;
 }game_object;
 
 //game_object create_gameobject();
