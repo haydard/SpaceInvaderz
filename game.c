@@ -1,6 +1,6 @@
 //
 //  game.c
-//  
+//
 //
 //  Created by Julia Heinz(!) on 05.11.14.
 //
@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <time.h>
 
-#define MEM_VIDEO_OUTPUT
+#define MEM_VIDEO_OUTPUT 1
 
 #define BLACK 0x000000
 #define WHITE 0xFFFFFF
@@ -35,21 +35,16 @@ char GAMEOVER;
 char CHANGE;
 //or int STATUS: 1= Game Over, 2: LEVEL CLEARED, 3: EPIC FAILURE
 
-enum EVENT{
-    SHOT_FIRED;
-    JOYSTICK_MOVED;
-    PAUSE;
-    //and so on;
-}
+
 
 int game_init(){
-    
+
     //initialise the field
-    &SCREEN = MEM_VIDEO_OUTPUT;
-    
+//    &SCREEN = MEM_VIDEO_OUTPUT;
+
     int i, j;
     for (i = 0; i < FIELD_WIDTH; i++){
-        for j = 0; j< FIELD_HEIGHT ; j++){
+        for (j = 0; j< FIELD_HEIGHT ; j++){
             FIELD[i][j] = 0;   //field: 0 = blank, 1= block(enemy), 2=spaceship, 3=rock, 4= laser
         }
     }
@@ -59,7 +54,7 @@ int game_init(){
     }
     //laser off;
     SHOT = 0;
-    
+
     //spaceship, rocks
 }
 
@@ -133,7 +128,7 @@ int main()
         while (!PAUSED){
             loop();
             render();
-    
+
         }
     }
     //end of game
@@ -194,7 +189,7 @@ typedef struct LASER{
     int x_location;
     int y_location;
 }laser;
-    
+
 /*some functions probably needed
  *  int occupies(Object);
  *  int detect_hit(GAMEOBJECT block, LASER laser);

@@ -23,12 +23,14 @@ int shot;
 int levelcleared;
 int gameover;
 int change;
+game_object *spaceship;
 game_object *blocks;
+game_object *laser_array;
 
 
 //initializing a new game: create field, create blocks, create spaceship.
 int game_init(){
-    
+
     //initialize the field
     int i, j;
     for (i = 0; i < FIELD_WIDTH; i++){
@@ -40,14 +42,14 @@ int game_init(){
     typedef struct laser_array{
         game_object *first_laser;
     }laser_array;
-    
-    
+
+
     laser_array *lasers = malloc(sizeof(laser_array));
     lasers->first_laser = NULL;
-    
+
     //initialisiere blöcke
     blocks = malloc(NOFBLOCKS*sizeof(game_object));
-    
+
     game_object *block;
     for (i=0; i < NOFBLOCKS; i++){
 
@@ -62,12 +64,12 @@ int game_init(){
         blocks[i] = *block;
         //in jeder 20x10 kasten wird ein block erstellen
     }
-    
+
     /* spaceship (TODO: rocks not yet)
      * SIZE: 8x6, Position 550, centered, 3 lives
      *
      */
-    game_object *spaceship = malloc(sizeof(game_object));
+    spaceship = malloc(sizeof(game_object));
     spaceship->number = 1;
     spaceship->color= WHITE;
     spaceship->x_location = (FIELD_WIDTH - 8)/2;
@@ -76,9 +78,9 @@ int game_init(){
     spaceship->width = 8;
     spaceship->height = 6;
     spaceship->type = 2;
-    
+
     shot = 0;
-    
+
     return 1;
 }
 
@@ -127,41 +129,27 @@ void calculate_spaceship()
         }else {
             spaceship->x_location = 1;
         }
-    }else if ((MOVEMENT > 0){
+    }else if (MOVEMENT > 0){
         if (spaceship->x_location + MOVEMENT < FIELD_WIDTH ){
             spaceship->x_location += MOVEMENT;
         }else{
             spaceship->x_location = FIELD_WIDTH -1;
         }
     }
-    if(SHOT){
-        if(!shot){
-            shootLaser(spaceship);
-        }
-    }
+//    if(SHOT){
+//        if(!shot){
+//            shootLaser(spaceship);
+//        }
+//    }
 }
 
-int detect_hit(game_object *laser)
-{
-    if (isHit(laser, spaceship)){
-        terminateLaser(laser);
-        return 1;
-    }
-    int i;
-    for (i=0; n<NOFBLOCKS; i++){
-        if (isHit(laser, blocks[i])){
-            if(blocks[i]->lives <= 0) block->color = BLACK;
-            terminateLaser(laser);
-        }
-    }
-}
 
 void terminateLaser(game_object *laser)
 {
     if (laser->type == 2)
         shot = 0;
     //somehow laser = laser -> next; im not sure jet.
-    
+
 }
 
 void shootLaser(game_object *shooter)
@@ -178,9 +166,9 @@ void shootLaser(game_object *shooter)
     if (shooter->type == 2){
         laser->y_location = shooter->y_location;
     }
-    
+
     //add laser to the laser array
-    game_object *currentLaser = laser_array->first_laser;
+    game_object *currentLaser = laser_array;
     while (currentLaser->next){
         currentLaser = currentLaser->next;
     }
@@ -193,18 +181,18 @@ int isHit(game_object *laser, game_object *block)
     if ((block->lives > 0) && (block->type != laser->type && (block->x_location <= laser->x_location) && block->x_location + block->width >= laser->x_location)){
         switch (laser->type){
             case 1: //enemy laser
-                if ((laser->y_location - LASERSPEED < block->y_location) && laser->y_location >= block->y_location)) {
+                if ((laser->y_location - LASERSPEED < block->y_location) && laser->y_location >= block->y_location) {
                     hit = 1;
                     block->lives =- 1;
                 }
                 break;
             case 2:
-                if ((laser->y_location + LASERSPEED > block->y_location) && laser->y_location <= block->y_location)) {
+                if ((laser->y_location + LASERSPEED > block->y_location) && laser->y_location <= block->y_location) {
                     hit = 1;
                     block->lives =- 1;
                 }
                 break;
-                
+
             default:
                 break;
         }
@@ -212,19 +200,33 @@ int isHit(game_object *laser, game_object *block)
     return hit;
 }
 
+int detect_hit(game_object *laser)
+{
+    if (isHit(laser, spaceship)){
+        terminateLaser(laser);
+        return 1;
+    }
+    int i;
+    for (i=0; i < NOFBLOCKS; i++){
+        if (isHit(laser, &blocks[i])){
+            if(blocks[i].lives <= 0) blocks[i].color = BLACK;
+            terminateLaser(laser);
+        }
+    }
+}
 
 void tick()
 
 {
     calculate_spaceship();
     calculate_blocks();
-    game_object *actual_laser = lasers->first_laser;
+    game_object *actual_laser = laser_array;
     while (actual_laser){
         calculate_laser(actual_laser);
         detect_hit(actual_laser);
         actual_laser = actual_laser->next;
     }
-    
+
     // new_positions_of_things();
     // CHANGE = is_changed();
 }
@@ -233,7 +235,7 @@ void tick()
 int game_end()
 {
     //all lasers
-    free (laser);
+//    free (laser);
     free (laser_array);
     free (spaceship);
     free (blocks);

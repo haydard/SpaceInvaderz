@@ -9,7 +9,7 @@
 #define LASER_SPACESHIP     3
 #define BLOCK               4
 
-typedef struct GAMEOBJECT{
+typedef struct _game_object{
 	int number;
 	int color;
 	int x_location;
@@ -17,8 +17,8 @@ typedef struct GAMEOBJECT{
 	unsigned char lives;
 	unsigned char width;
 	unsigned char height;
-    	int type;
-    	game_object *next;
+    int type;
+    struct _game_object *next;
 }game_object;
 
 //game_object create_gameobject();
