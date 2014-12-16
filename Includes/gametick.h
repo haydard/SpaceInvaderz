@@ -9,29 +9,45 @@
 #include "objects.h"
 
 
-#define LASERSPEED 5
+#define LASERSPEED 3
 #define NOFBLOCKS 30
 #define LIVES 3
 #define BLOCK_WIDTH 8
 #define BLOCK_HEIGHT 4
+#define SPACESHIP_START_Y 550
+//#define SPACESHIP_START_X SCREEN_WIDTH/2
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
-#define SPACESHIP_START_X 550
+#define FIELD_WIDTH 640
+#define FIELD_HEIGHT 480
 
+//game variables
+int field[FIELD_WIDTH][FIELD_HEIGHT];
+int movement;
+int shooting;
+int gameover;
+
+
+//game methods
 int game_init();
 
 int event();
 
-int calculate_laser();
-
-int calculate_blocks();
-
-int calculate_spaceship();
-
-int detect_hit();
-
-int gametick();
+int tick();
 
 int game_end();
+
+/*
+ * bunch of internal methods
+ void terminate_laser();
+ void calculate_laser();
+ void calculate_blocks();
+
+ void calculate_spaceship();
+
+ int detect_hit();
+
+ */
+
 
 #endif //(___gametick_) defined.

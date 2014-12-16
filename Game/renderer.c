@@ -1,5 +1,9 @@
-#include <renderer.h>
+
+
+#include "renderer.h"
 #include <stdio.h>
+#include "SDL/SDL.h"
+#include "gametick.h"
 
 
 // #include soundlibrary

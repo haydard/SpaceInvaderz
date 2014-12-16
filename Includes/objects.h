@@ -9,9 +9,10 @@
 #define LASER_SPACESHIP     3
 #define BLOCK               4
 
+
 typedef struct _game_object{
 	int number;
-	int color;
+	int color;  //Black=0; White=1;
 	int x_location;
 	int y_location;
 	unsigned char lives;

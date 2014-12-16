@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <gametick.h>
+#include "gametick.h"
 #include <unistd.h>
 
 #define GAME_SPEED 1
@@ -19,7 +19,7 @@ int main()
         while (paused)
             continue;
         
-        gametick();
+        tick();
     }
     
     //end of game
