@@ -36,7 +36,7 @@ void render_graphic(int **field)
 	int i,j;
         for (i = 0; i < FIELD_WIDTH; i++){
             for (j = 0; j< FIELD_HEIGHT ; j++){
-                screen[((i*FIELD_WIDTH) + j) * 3] = color_RGB(field[i][j]);
+        //        screen[((i*FIELD_WIDTH) + j) * 3] = color_RGB(field[i][j]);
             }
         }
     //}

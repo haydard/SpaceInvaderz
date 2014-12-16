@@ -7,6 +7,7 @@
 #define GREEN   0x00ff00
 #define BLUE    0x0000ff
 
+/*
 #define SCREEN_WIDTH 640
 #define SCREEN_HEIGHT 480
 #define FIELD_WIDTH 640
@@ -16,5 +17,6 @@
 char screen[FIELD_WIDTH * FIELD_HEIGHT * 3];
 
 void render(int **field);
+*/
 
 #endif

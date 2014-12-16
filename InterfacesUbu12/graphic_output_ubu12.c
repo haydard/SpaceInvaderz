@@ -5,10 +5,10 @@
 #endif
 
 void init_screen(){
-    SDL_Init(SDL_INIT_VIDEO);
+   // SDL_Init(SDL_INIT_VIDEO);
     // TODO screen = SDL_SetVideoMode(640, 480, 32);
 
-    SDL_WM_SetCaption();
+    //SDL_WM_SetCaption();
 }
 
 int screen(char* pixels){

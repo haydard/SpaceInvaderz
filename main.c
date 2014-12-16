@@ -5,21 +5,22 @@
 
 #define GAME_SPEED 1
 
-int running;
-int paused;
-
-int main()
+//initialize the game,
+int main(int argc, char *args[])
 {
     //initialize the game;
-    running = game_init();
-    while (running) {
+    if (!game_init()){
+        printf("initiation error");
+        return -1;
+    }
+    while (!gameover) {
     	usleep(50000/GAME_SPEED);
         //check for events
-        event();
+        get_event();
         while (paused)
             continue;
-        
         tick();
+        renderScreen();
     }
     
     //end of game
@@ -32,3 +33,4 @@ int main()
     }
     return 0;
 }
+

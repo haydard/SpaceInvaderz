@@ -22,6 +22,10 @@ typedef struct Laser_array{
 
 laser_array *lasers;
 
+SDL_Event event;
+SDL_Surface *screen;
+
+
 //initializing a new game: create field, create blocks, create spaceship.
 
 /*************************************************
@@ -39,8 +43,11 @@ int game_init(){
     //initialize lasers with no initial lasers
     //game_object *spaceship_laser just another laser
     
-    
-
+    if (SDL_Init(SDL_INIT_EVERYTHING) == -1){
+        printf("SDL_init_failiure: %s\n", SDL_GetError());
+        return -1;
+    }
+    printf("SDL initialized.\n");
     //first laser with type 0, placeholder to make later laser actions easier.
     lasers = malloc(sizeof(laser_array));
     lasers->first_laser = malloc(sizeof(game_object));
@@ -49,6 +56,7 @@ int game_init(){
     lasers->first_laser->number = 0;
     lasers->runningNoofLasers = 0;
     
+    printf("Lasers ready\n");
     //initialisiere blöcke
     blocks = malloc(NOFBLOCKS*sizeof(game_object));
 
@@ -66,7 +74,7 @@ int game_init(){
         blocks[i] = *block;
         //in jeder 40x20 kasten wird ein block erstellen
     }
-
+    printf("Blocks ready\n");
     /* spaceship (TODO: rocks not yet)
      * SIZE: 8x6, Position 550, centered, 3 lives
      *
@@ -80,12 +88,18 @@ int game_init(){
     spaceship->width = 9;
     spaceship->height = 6;
     spaceship->type = 2;  //allied
-
+    printf("spaceship ready\n");
     //no laser shot_fired, spaceship idle
     shot_fired = 0;
     movement = 0;
     shooting = 0;
+    paused = 1;
+    gameover = 0;
     
+    SDL_EnableKeyRepeat(20, 20);
+    screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 24, SDL_SWSURFACE);
+
+    printf("All set.\n");
     // TODO: SDL Init
     
     return 1;
@@ -94,12 +108,35 @@ int game_init(){
 }
 
 //check different inputs and write the EVENT;
-/* TODO : SDL event shooting, shot fired
- void event()
+int get_event()
 {
-    check_input();
+    while (SDL_PollEvent(&event)){
+        if (event.type == SDL_KEYDOWN){
+            switch (event.key.keysym.sym) {
+                case SDLK_LEFT:
+                    movement --;
+                    break;
+                case SDLK_RIGHT:
+                    movement ++;
+                    break;
+                case SDLK_ESCAPE:
+                    gameover = 1;
+                    break;
+                case SDLK_SPACE:
+                    shooting = 1;
+                    break;
+                case SDLK_p:
+                    paused = (!paused);
+                default:
+                    break;
+            }
+        }else if (event.type == SDL_QUIT){
+            gameover = 1;
+            return 0;
+        }
+    }
+    return 0;
 }
-*/
 
 //functions to use in the game loop
 /*************************************************
@@ -120,6 +157,7 @@ void shoot_laser(game_object *shooter)
     }
     if (shooter->type == 2){
         laser->y_location = shooter->y_location;
+        shot_fired = 1;
     }
     
     //add laser to the laser array
@@ -164,9 +202,33 @@ void calculate_laser(game_object *laser)
     if (laser->y_location > FIELD_WIDTH || laser->y_location <= 0)
         terminate_laser(laser);
 }
+//somehow display our pixels from the field on the screen.
+void putpixel24bitBlackAndWhite(SDL_Surface *screen, int x, int y, int pixel)
+{
+    int bpp = screen->format->BytesPerPixel;
+    char *p = (char *)screen->pixels + y * screen->pitch + x * bpp;
+    if (pixel) {
+        p[0] = 0xff;
+        p[1] = 0xff;
+        p[2] = 0xff;
+    } else {
+        p[0] = 0x00;
+        p[1] = 0x00;
+        p[2] = 0x00;
+    }
+    
+}
 
-
-
+void renderScreen()
+{
+    int i,j;
+    for (i=0; i<FIELD_WIDTH; i++){
+        for (j=0; j<FIELD_HEIGHT; j++) {
+            putpixel24bitBlackAndWhite(screen,  i, j, field[i][j]);
+        }
+    }
+    SDL_Flip(screen);
+}
 //blocks shoot occasionally
 void calculate_blocks()
 {
@@ -312,17 +374,24 @@ int tick()
     return generateField();
 }
 
-
+//so far everything freed.
 int game_end()
-{   //TODO
-    //all lasers
-//    free (laser);
-    free (lasers);
+{
     free (spaceship);
     free (blocks);
+    game_object *currentLaser = lasers->first_laser->next;
+    while (currentLaser) {
+        lasers->first_laser->next = lasers->first_laser->next->next;
+        free (currentLaser);
+        currentLaser = lasers->first_laser->next;
+    }
+    free (lasers->first_laser);
+    free(lasers);
+    SDL_Quit();
     return 0;
 }
 
+//SO let the SDL games begin
 
 
 

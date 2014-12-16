@@ -26,14 +26,17 @@ int field[FIELD_WIDTH][FIELD_HEIGHT];
 int movement;
 int shooting;
 int gameover;
+int paused;
 
 
 //game methods
 int game_init();
 
-int event();
+int get_event();
 
 int tick();
+
+void renderScreen();
 
 int game_end();
 
