@@ -6,7 +6,7 @@
 #define GAME_SPEED 1
 
 //initialize the game,
-int main(int argc, char *args[])
+int main(int argc, char *argv[])
 {
     //initialize the game;
     if (!game_init()){
