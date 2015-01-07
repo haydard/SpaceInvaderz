@@ -31,11 +31,12 @@ int checkEventBuffer()
     return 0;
 }
 
-int movement()
+/*
+ int movement()
 {
     return 0;
 }
-
+*/
 char isShooting()
 {
     return inputbuffer[1];

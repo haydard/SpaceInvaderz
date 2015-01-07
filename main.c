@@ -2,17 +2,18 @@
 #include <stdlib.h>
 #include "gametick.h"
 #include <unistd.h>
+#include <string.h>
 
 #define GAME_SPEED 1
-
+/*
 //initialize the game,
 int main(int argc, char *argv[])
 {
     //initialize the game;
-    if (!game_init()){
-        printf("initiation error");
-        return -1;
-    }
+    game_init();
+       // printf("initiation error");
+    //return -1;
+    //}
     while (!gameover) {
     	usleep(50000/GAME_SPEED);
         //check for events
@@ -33,4 +34,4 @@ int main(int argc, char *argv[])
     }
     return 0;
 }
-
+*/
